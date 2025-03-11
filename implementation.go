@@ -5,8 +5,17 @@ import (
 	"strings"
 )
 
-// TODO: document this function.
-// PostfixToInfix converts
+// PostfixToInfix converts a mathematical expression from postfix
+// (Reverse Polish) notation to infix notation.
+//
+// Parameters:
+//   - input: a string containing a mathematical expression in postfix
+//     notation, where operands and operators are separated by spaces.
+//
+// Returns:
+//   - A string representing the equivalent infix expression, where operators
+//     are placed between operands and enclosed in parentheses to preserve operation order.
+//   - An error if the input is invalid (e.g., not enough operands for an operator).
 func PostfixToInfix(input string) (string, error) {
 	var stack []string
 	parts := strings.Split(input, " ")
