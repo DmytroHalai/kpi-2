@@ -1,23 +1,46 @@
 package lab2
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPrefixToPostfix(t *testing.T) {
-	res, err := PostfixToInfix("+ 5 * - 4 2 3")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	}
-}
+func TestPostfixToInfix(t *testing.T) {
+	t.Run("Simple expressions", func(t *testing.T) {
+		res, err := PostfixToInfix("3 4 +")
+		assert.NoError(t, err)
+		assert.Equal(t, "(3 + 4)", res)
 
-func ExamplePrefixToPostfix() {
-	res, _ := PostfixToInfix("+ 2 2")
-	fmt.Println(res)
+		res, err = PostfixToInfix("5 1 -")
+		assert.NoError(t, err)
+		assert.Equal(t, "(5 - 1)", res)
+	})
 
-	// Output:
-	// 2 2 +
+	t.Run("Complex expressions", func(t *testing.T) {
+		res, err := PostfixToInfix("2 3 1 * + 9 -")
+		assert.NoError(t, err)
+		assert.Equal(t, "((2 + (3 * 1)) - 9)", res)
+
+		res, err = PostfixToInfix("3 4 5 * 6 + -")
+		assert.NoError(t, err)
+		assert.Equal(t, "(3 - ((4 * 5) + 6))", res)
+	})
+
+	t.Run("Very complex expressions", func(t *testing.T) {
+		res, err := PostfixToInfix("123 11 3 4 + 5 6 * - 7 8 + * 9 / - ^")
+		assert.NoError(t, err)
+		assert.Equal(t, "(123 ^ (11 - ((((3 + 4) - (5 * 6)) * (7 + 8)) / 9)))", res)
+	  })
+	
+	t.Run("Invalid input", func(t *testing.T) {
+		_, err := PostfixToInfix("3")
+		assert.Error(t, err)
+
+		_, err = PostfixToInfix("3 + 4")
+		assert.Error(t, err)
+
+		_, err = PostfixToInfix("3 4 5 +") 
+		assert.Error(t, err)
+	})
 }
