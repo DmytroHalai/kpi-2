@@ -1,6 +1,7 @@
 package lab2
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -43,4 +44,14 @@ func TestPostfixToInfix(t *testing.T) {
 		_, err = PostfixToInfix("3 4 5 +") 
 		assert.Error(t, err)
 	})
+}
+
+func ExamplePostfixToInfix() {
+	res, err := PostfixToInfix("3 4 + 2 * 7 /")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println(res)
+	// Output: (((3 + 4) * 2) / 7)
 }
