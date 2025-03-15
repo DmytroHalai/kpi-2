@@ -1,27 +1,20 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"os"
+
 	lab2 "github.com/roman-mazur/architecture-lab-2"
 )
 
-var (
-	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
-)
-
 func main() {
-	flag.Parse()
+	handler := lab2.ComputeHandler{
+		Input:  os.Stdin,
+		Output: os.Stdout,
+	}
 
-	// TODO: Change this to accept input from the command line arguments as described in the task and
-	//       output the results using the ComputeHandler instance.
-	//       handler := &lab2.ComputeHandler{
-	//           Input: {construct io.Reader according the command line parameters},
-	//           Output: {construct io.Writer according the command line parameters},
-	//       }
-	//       err := handler.Compute()
-
-	res, _ := lab2.PostfixToInfix("+ 2 2")
-	fmt.Println(res)
+	if err := handler.Compute(); err != nil {
+		fmt.Fprintln(os.Stderr, "Error:", err)
+		os.Exit(1)
+	}
 }
