@@ -1,0 +1,29 @@
+name: Go Build and Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          go mod tidy
+
+      - name: Run tests
+        run: |
+          go test -v ./...
+
+      - name: Build
+        run: |
+          make
