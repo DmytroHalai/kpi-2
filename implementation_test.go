@@ -20,6 +20,10 @@ func TestPostfixToInfix(t *testing.T) {
 		res, err = PostfixToInfix("0,123 0,456 +")
 		assert.NoError(t, err)
 		assert.Equal(t, "(0,123 + 0,456)", res)
+
+		res, err = PostfixToInfix("0.123 0.456 +")
+		assert.NoError(t, err)
+		assert.Equal(t, "(0.123 + 0.456)", res)
 	})
 
 	t.Run("Complex expressions", func(t *testing.T) {
