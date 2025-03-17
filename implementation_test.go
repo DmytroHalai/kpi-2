@@ -16,6 +16,14 @@ func TestPostfixToInfix(t *testing.T) {
 		res, err = PostfixToInfix("5 1 -")
 		assert.NoError(t, err)
 		assert.Equal(t, "(5 - 1)", res)
+
+		res, err = PostfixToInfix("0,123 0,456 +")
+		assert.NoError(t, err)
+		assert.Equal(t, "(0,123 + 0,456)", res)
+
+		res, err = PostfixToInfix("0.123 0.456 +")
+		assert.NoError(t, err)
+		assert.Equal(t, "(0.123 + 0.456)", res)
 	})
 
 	t.Run("Complex expressions", func(t *testing.T) {
@@ -43,6 +51,20 @@ func TestPostfixToInfix(t *testing.T) {
 
 		_, err = PostfixToInfix("3 4 5 +") 
 		assert.Error(t, err)
+	})
+
+	t.Run("Invalid numbers", func(t *testing.T) {
+		_, err := PostfixToInfix("3 4 0,00,1123 +")
+		assert.Error(t, err)
+
+		_, err = PostfixToInfix("3 abc +")
+		assert.Error(t, err)
+	})
+
+	t.Run("Number formatting", func(t *testing.T) {
+		res, err := PostfixToInfix("0003 004 +")
+		assert.NoError(t, err)
+		assert.Equal(t, "(3 + 4)", res)
 	})
 }
 
