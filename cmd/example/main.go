@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"strings"
+
+	lab2 "github.com/roman-mazur/architecture-lab-2"
 )
 
 func main() {
@@ -35,5 +37,21 @@ func main() {
 	} else {
 		fmt.Fprintln(os.Stderr, "Error: no input provided (-e or -f required)")
 		os.Exit(1)
+	}
+
+	var output io.Writer = os.Stdout
+	if *outputFlag != "" {
+		file, err := os.Create(*outputFlag)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error creating output file:", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		output = file
+	}
+
+	handler := &lab2.ComputeHandler{
+		Input:  input,
+		Output: output,
 	}
 }
