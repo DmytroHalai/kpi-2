@@ -54,4 +54,10 @@ func main() {
 		Input:  input,
 		Output: output,
 	}
+
+	if err := handler.Compute(); err != nil {
+		fmt.Fprintln(os.Stderr, "Error:", err)
+		os.Exit(1)
+	}
+	
 }
