@@ -31,8 +31,7 @@ func main() {
 		}
 		defer file.Close()
 		input = file
-	}
-	if *exprFlag != "" {
+	} else if *exprFlag != "" {
 		input = strings.NewReader(*exprFlag)
 	} else {
 		fmt.Fprintln(os.Stderr, "Error: no input provided (-e or -f required)")
