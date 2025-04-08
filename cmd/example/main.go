@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	lab2 "github.com/roman-mazur/architecture-lab-2"
+	lab2 "github.com/DmytroHalai/kpi-2"
 )
 
 func main() {
@@ -58,5 +58,5 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	}
-	
+
 }
